@@ -1,11 +1,11 @@
-Import { defineConfig } from "vite";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  // AJUSTE AQUI: Nome do repositório entre barras
-  base: "/Documenter-integrations-erp/", 
+  // Isso pega o nome do repo automaticamente do GitHub Actions
+  base: process.env.BASE_URL || "/", 
   server: {
     host: "::",
     port: 8080,
