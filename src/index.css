@@ -1,0 +1,246 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 220 25% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 25% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 25% 10%;
+
+    --primary: 220 90% 56%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 25% 10%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 10% 46%;
+
+    --accent: 220 90% 96%;
+    --accent-foreground: 220 90% 40%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 220 90% 56%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 220 10% 30%;
+    --sidebar-primary: 220 90% 56%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 90% 96%;
+    --sidebar-accent-foreground: 220 90% 40%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 220 90% 56%;
+
+    /* Custom doc tokens */
+    --doc-nav-width: 280px;
+    --doc-header-height: 64px;
+    --doc-code-bg: 220 20% 95%;
+    --doc-warning-bg: 45 100% 96%;
+    --doc-warning-border: 45 100% 60%;
+    --doc-warning-text: 35 80% 30%;
+    --doc-info-bg: 210 100% 96%;
+    --doc-info-border: 210 100% 60%;
+    --doc-info-text: 210 80% 30%;
+    --doc-success-bg: 145 60% 95%;
+    --doc-success-border: 145 60% 45%;
+    --doc-success-text: 145 50% 25%;
+    --doc-table-header: 220 14% 96%;
+    --doc-table-border: 220 13% 88%;
+    --doc-table-stripe: 220 14% 98%;
+  }
+
+  .dark {
+    --background: 222 30% 7%;
+    --foreground: 210 40% 96%;
+    --card: 222 30% 10%;
+    --card-foreground: 210 40% 96%;
+    --popover: 222 30% 10%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 220 90% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 20% 16%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 220 20% 16%;
+    --muted-foreground: 220 10% 60%;
+    --accent: 220 40% 16%;
+    --accent-foreground: 220 90% 70%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 20% 18%;
+    --input: 220 20% 18%;
+    --ring: 220 90% 60%;
+    --sidebar-background: 222 30% 8%;
+    --sidebar-foreground: 210 20% 70%;
+    --sidebar-primary: 220 90% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 30% 14%;
+    --sidebar-accent-foreground: 220 90% 70%;
+    --sidebar-border: 220 20% 18%;
+    --sidebar-ring: 220 90% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Inter', sans-serif;
+  }
+
+  code, pre {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  .doc-section {
+    @apply mb-10;
+  }
+
+  .doc-heading-1 {
+    @apply text-3xl font-bold text-foreground mb-4 tracking-tight;
+  }
+
+  .doc-heading-2 {
+    @apply text-2xl font-semibold text-foreground mb-3 tracking-tight;
+  }
+
+  .doc-heading-3 {
+    @apply text-xl font-semibold text-foreground mb-2;
+  }
+
+  .doc-paragraph {
+    @apply text-base leading-7 text-muted-foreground mb-4;
+  }
+
+  .doc-list {
+    @apply list-disc pl-6 mb-4 space-y-1;
+  }
+
+  .doc-list li {
+    @apply text-muted-foreground leading-7;
+  }
+
+  .doc-table {
+    @apply w-full border-collapse rounded-lg overflow-hidden mb-6;
+  }
+
+  .doc-table th {
+    @apply px-4 py-3 text-left text-sm font-semibold text-foreground;
+    background: hsl(var(--doc-table-header));
+    border-bottom: 1px solid hsl(var(--doc-table-border));
+  }
+
+  .doc-table td {
+    @apply px-4 py-2.5 text-sm text-muted-foreground;
+    border-bottom: 1px solid hsl(var(--doc-table-border));
+  }
+
+  .doc-table tr:nth-child(even) td {
+    background: hsl(var(--doc-table-stripe));
+  }
+
+  .doc-callout-warning {
+    @apply rounded-lg p-4 mb-6 border-l-4;
+    background: hsl(var(--doc-warning-bg));
+    border-left-color: hsl(var(--doc-warning-border));
+    color: hsl(var(--doc-warning-text));
+  }
+
+  .doc-callout-info {
+    @apply rounded-lg p-4 mb-6 border-l-4;
+    background: hsl(var(--doc-info-bg));
+    border-left-color: hsl(var(--doc-info-border));
+    color: hsl(var(--doc-info-text));
+  }
+
+  .doc-callout-success {
+    @apply rounded-lg p-4 mb-6 border-l-4;
+    background: hsl(var(--doc-success-bg));
+    border-left-color: hsl(var(--doc-success-border));
+    color: hsl(var(--doc-success-text));
+  }
+
+  .doc-code-block {
+    @apply rounded-lg p-4 text-sm overflow-x-auto mb-6 font-mono;
+    background: hsl(var(--doc-code-bg));
+  }
+
+  .doc-code-inline {
+    @apply px-1.5 py-0.5 rounded text-sm font-mono;
+    background: hsl(var(--doc-code-bg));
+  }
+
+  .doc-step {
+    @apply flex gap-4 mb-6;
+  }
+
+  .doc-step-number {
+    @apply w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 mt-0.5;
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+
+  .doc-nav-item {
+    @apply flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors cursor-pointer;
+    color: hsl(var(--sidebar-foreground));
+  }
+
+  .doc-nav-item:hover {
+    background: hsl(var(--sidebar-accent));
+    color: hsl(var(--sidebar-accent-foreground));
+  }
+
+  .doc-nav-item.active {
+    background: hsl(var(--sidebar-accent));
+    color: hsl(var(--sidebar-accent-foreground));
+    font-weight: 600;
+  }
+
+  .doc-nav-section-title {
+    @apply px-3 py-2 text-xs font-semibold uppercase tracking-wider;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .doc-erp-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+    background: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full;
+  background: hsl(var(--border));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.3);
+}
