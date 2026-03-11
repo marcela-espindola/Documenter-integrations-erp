@@ -4,8 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  // Isso pega o nome do repo automaticamente do GitHub Actions
-  base: process.env.BASE_URL || "/", 
+  base: "/Documenter-integrations-erp/", 
   server: {
     host: "::",
     port: 8080,
