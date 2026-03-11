@@ -28,13 +28,10 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm install # Usando install para garantir que pegue tudo
+        run: npm install
 
       - name: Build
         run: npm run build
-        env:
-          # Define o caminho base como /nome-do-repo/
-          BASE_URL: /${{ github.event.repository.name }}/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
