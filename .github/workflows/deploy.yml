@@ -24,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22  # Atualizado para a versão mais recente
           cache: npm
 
       - name: Install dependencies
@@ -33,7 +33,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      # ESTE É O TRUQUE: Cria uma cópia do index.html como 404.html
       - name: Create 404 Page
         run: cp dist/index.html dist/404.html
 
