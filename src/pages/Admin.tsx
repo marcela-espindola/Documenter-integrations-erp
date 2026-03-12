@@ -1,4 +1,4 @@
-{/* Tabela de Campos (Apenas se for a seção de campos) */}
+
 {sec.title.toLowerCase().includes('campos') && (
   <div className="mb-6 bg-slate-100 p-4 rounded-lg border border-slate-200">
     <div className="flex justify-between items-center mb-4">
