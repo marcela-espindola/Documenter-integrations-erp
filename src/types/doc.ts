@@ -20,10 +20,14 @@ export interface Section {
   noteContent?: string;
 }
 
+// Adicionamos os contatos aqui
 export interface Documentation {
   id: string;
   title: string;
   erp: string;
   version: string;
+  erpEmail?: string;
+  erpPhone?: string;
+  erpWhatsApp?: string;
   sections: Section[];
 }
