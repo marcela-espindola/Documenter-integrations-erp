@@ -12,47 +12,58 @@ export default function DocView() {
     if (found) setDoc(found);
   }, [id]);
 
-  if (!doc) return <div className="p-20 text-center">Carregando...</div>;
+  if (!doc) return <div className="p-20 text-center font-bold">Documentação não encontrada...</div>;
 
   return (
-    <div className="bg-white min-h-screen p-12">
-      <div className="max-w-4xl mx-auto">
-        <Link to="/" className="print:hidden text-blue-600 mb-4 block">← Voltar</Link>
-        <button onClick={() => window.print()} className="print:hidden bg-red-600 text-white px-4 py-2 rounded mb-8">PDF 📄</button>
-        
-        <h1 className="text-5xl font-black mb-10 border-b-8 border-blue-600 pb-4">{doc.erp} - {doc.title}</h1>
+    <div className="bg-white min-h-screen">
+      <div className="max-w-4xl mx-auto p-12">
+        <header className="border-b-8 border-blue-600 pb-8 mb-16">
+          <h1 className="text-6xl font-black text-slate-900 leading-none">{doc.erp}</h1>
+          <p className="text-blue-600 text-2xl font-bold mt-2">{doc.title}</p>
+        </header>
 
         {doc.sections.map((sec) => (
-          <div key={sec.id} className="mb-16 print:break-before-page">
-            <h2 className="text-2xl font-bold mb-4 text-blue-800 border-b pb-2">{sec.title}</h2>
-            <div className="whitespace-pre-wrap text-slate-700 mb-6">{sec.content}</div>
-            
-            {sec.fields && sec.fields.length > 0 && (
-              <table className="w-full border mb-8 text-sm">
-                <thead className="bg-slate-800 text-white">
-                  <tr>
-                    <th className="p-2 text-left">Categoria</th>
-                    <th className="p-2 text-left">Campo ERP</th>
-                    <th className="p-2 text-left">Campo IDEA</th>
-                    <th className="p-2 text-center">Obrig?</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sec.fields.map((f, i) => (
-                    <tr key={i} className="border-b">
-                      <td className="p-2 text-slate-400">{f.category}</td>
-                      <td className="p-2 font-mono font-bold">{f.erpField}</td>
-                      <td className="p-2 font-mono">{f.ideaField}</td>
-                      <td className="p-2 text-center">{f.required ? 'SIM' : 'NÃO'}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
+          <div key={sec.id} className="mb-20 print:break-before-page">
+            <h2 className="text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
+               <span className="text-blue-600">#</span> {sec.title}
+            </h2>
+            <div className="text-lg text-slate-700 whitespace-pre-wrap mb-8">{sec.content}</div>
 
-            {sec.images.map((img, i) => (
-              <img key={i} src={img} className="rounded shadow-lg mb-4 max-w-full" alt="Print" />
+            {/* Renderização de Sub-tópicos */}
+            {sec.subSections?.map(sub => (
+              <div key={sub.id} className="ml-10 mb-10 border-l-4 border-slate-100 pl-6">
+                <h3 className="text-xl font-bold text-slate-800 mb-3 underline decoration-blue-200">{sub.title}</h3>
+                <div className="text-slate-600 whitespace-pre-wrap">{sub.content}</div>
+              </div>
             ))}
+
+            {/* Tabela de Campos Integrados */}
+            {sec.fields && sec.fields.length > 0 && (
+              <div className="overflow-hidden border rounded-xl shadow-lg mb-10">
+                <table className="w-full text-sm">
+                  <thead className="bg-slate-900 text-white">
+                    <tr>
+                      <th className="p-3 text-left">Categoria</th>
+                      <th className="p-3 text-left">ERP</th>
+                      <th className="p-3 text-left">IDEA</th>
+                      <th className="p-3 text-center">Obrig?</th>
+                      <th className="p-3 text-left">Descrição</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {sec.fields.map((f, i) => (
+                      <tr key={i} className="border-b hover:bg-blue-50">
+                        <td className="p-3 font-bold text-blue-500 uppercase text-[10px]">{f.category}</td>
+                        <td className="p-3 font-mono font-bold text-slate-700">{f.erpField}</td>
+                        <td className="p-3 font-mono text-slate-500">{f.ideaField}</td>
+                        <td className="p-3 text-center">{f.required ? <span className="text-red-600 font-black">SIM</span> : 'NÃO'}</td>
+                        <td className="p-3 text-slate-400 italic text-xs">{f.description}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         ))}
       </div>
