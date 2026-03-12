@@ -16,31 +16,21 @@ export default function DocView() {
     return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br/>');
   };
 
-  if (!doc) return <div className="p-20 text-center font-bold text-slate-300 italic uppercase">Manual não encontrado</div>;
+  if (!doc) return <div className="p-20 text-center font-bold text-slate-300">Carregando...</div>;
 
   return (
     <div className="bg-slate-50 min-h-screen pb-20 font-sans">
-      {/* HEADER FIXO VOLTAR */}
       <div className="fixed top-4 left-4 flex gap-2 print:hidden z-50">
-        <Link to="/" className="bg-white border text-slate-900 px-4 py-2 rounded-full text-[10px] font-black shadow-sm hover:bg-slate-50 transition-all">← VOLTAR</Link>
-        <button onClick={() => window.print()} className="bg-red-500 text-white px-4 py-2 rounded-full text-[10px] font-black shadow-sm hover:bg-red-600 transition-all">PDF 📄</button>
+        <Link to="/" className="bg-white border text-slate-900 px-4 py-2 rounded-full text-[10px] font-black shadow-sm">← VOLTAR</Link>
+        <button onClick={() => window.print()} className="bg-red-500 text-white px-4 py-2 rounded-full text-[10px] font-black shadow-sm">PDF 📄</button>
       </div>
 
       <div className="max-w-4xl mx-auto p-12 bg-white mt-10 shadow-xl rounded-2xl min-h-screen text-slate-700">
         <header className="border-b-4 border-blue-600 pb-10 mb-16">
           <h1 className="text-6xl font-black text-slate-900 tracking-tighter mb-2 leading-none">{doc.erp}</h1>
           <h2 className="text-xl font-bold text-blue-600 uppercase tracking-widest">{doc.title}</h2>
-          <p className="text-slate-300 font-mono text-[10px] mt-2">v.{doc.version}</p>
+          <p className="text-slate-300 font-mono text-[10px] mt-2 italic">v.{doc.version}</p>
         </header>
-
-        {/* --- INTRODUÇÃO E BENEFÍCIOS (FIXOS) --- */}
-        <section className="mb-20">
-          <h2 className="text-3xl font-bold text-slate-800 mb-6 underline decoration-blue-200">1. Introdução</h2>
-          <p className="text-lg text-slate-600 leading-relaxed mb-6">
-            A Audaces, presente em mais de 70 países, é referência em inovação tecnológica para a indústria da moda. 
-            Nossa parceria com a <strong>{doc.erp}</strong> trouxe uma integração poderosa entre o ERP e o software Audaces IDEA.
-          </p>
-        </section>
 
         {doc.sections.map((sec, idx) => {
           const sectionNumber = idx + 3;
@@ -55,22 +45,25 @@ export default function DocView() {
                 <div className="text-md text-slate-400 italic mb-8 pl-6 border-l-2 border-slate-100" dangerouslySetInnerHTML={{ __html: formatText(sec.description) }} />
               )}
 
-              {/* SEÇÃO ESPECIAL: CONTATOS LADO A LADO NA SEÇÃO 3 */}
+              {/* CONTATOS LADO A LADO NA SEÇÃO 3 */}
               {sec.title === 'Iniciando a integração' && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                  {/* CARD ERP - SÓ MOSTRA O QUE FOI PREENCHIDO */}
                   <div className="p-8 border rounded-2xl bg-white shadow-sm border-t-4 border-t-slate-800">
-                    <h3 className="text-xl font-black text-slate-900 mb-4">Contato {doc.erp}</h3>
+                    <h3 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tighter">Contato {doc.erp}</h3>
                     <div className="space-y-3 text-sm text-slate-500">
                       {doc.erpEmail && <div className="flex items-center gap-2 font-medium">✉️ {doc.erpEmail}</div>}
                       {doc.erpPhone && <div className="flex items-center gap-2 font-medium">📞 {doc.erpPhone}</div>}
                       {doc.erpWhatsApp && <div className="flex items-center gap-2 font-medium">💬 {doc.erpWhatsApp}</div>}
                     </div>
                   </div>
+                  
+                  {/* CARD AUDACES */}
                   <div className="p-8 border rounded-2xl bg-white shadow-sm border-t-4 border-t-blue-600">
-                    <h3 className="text-xl font-black text-slate-900 mb-4">Contato Audaces</h3>
+                    <h3 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tighter">Contato Audaces</h3>
                     <div className="space-y-3 text-sm text-slate-500">
-                      <div className="flex items-center gap-2 font-medium italic">👤 {doc.audacesName || 'Marcela Espindola'}</div>
-                      <div className="flex items-center gap-2 font-medium italic">✉️ {doc.audacesEmail || 'integrations@audaces.com'}</div>
+                      <div className="flex items-center gap-2 font-medium italic">👤 {doc.audacesName}</div>
+                      <div className="flex items-center gap-2 font-medium italic">✉️ {doc.audacesEmail}</div>
                     </div>
                   </div>
                 </div>
@@ -95,7 +88,7 @@ export default function DocView() {
                       <span className="bg-slate-900 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black shrink-0">{i + 1}</span>
                       <div className="text-slate-700 text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: formatText(step.text) }} />
                     </div>
-                    {step.image && <img src={step.image} className="rounded-xl border border-slate-100 shadow-lg max-w-full ml-10" />}
+                    {step.image && <img src={step.image} className="rounded-xl border shadow-lg max-w-full ml-10" />}
                   </div>
                 ))}
               </div>
