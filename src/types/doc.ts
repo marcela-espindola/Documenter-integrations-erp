@@ -16,8 +16,8 @@ export interface Section {
   description: string;
   steps: Step[];
   fields?: IntegratedField[];
-  noteType?: 'info' | 'warning' | 'success';
-  noteContent?: string;
+  noteType: 'info' | 'warning' | 'success';
+  noteContent: string;
 }
 
 export interface Documentation {
@@ -28,7 +28,7 @@ export interface Documentation {
   erpEmail?: string;
   erpPhone?: string;
   erpWhatsApp?: string;
-  audacesName?: string; // NOVO
-  audacesEmail?: string; // NOVO
+  audacesName?: string;
+  audacesEmail?: string;
   sections: Section[];
 }
