@@ -8,11 +8,13 @@ export default function Admin() {
   const [erp, setErp] = useState('');
   const [version, setVersion] = useState('2025.03');
   
-  // Contatos
+  // Contatos ERP
   const [erpEmail, setErpEmail] = useState('');
   const [erpPhone, setErpPhone] = useState('');
   const [erpWhatsApp, setErpWhatsApp] = useState('');
-  const [audacesName, setAudacesName] = useState('Marcela Espindola');
+  
+  // Contatos Audaces
+  const [audacesName, setAudacesName] = useState('Integração Audaces');
   const [audacesEmail, setAudacesEmail] = useState('integrations@audaces.com');
 
   const [generatedCode, setGeneratedCode] = useState('');
@@ -73,43 +75,46 @@ export default function Admin() {
         </div>
       )}
 
-      {/* HEADER E CONTATOS */}
+      {/* HEADER E CONTATOS ORGANIZADOS */}
       <div className="bg-white p-8 rounded-xl border mb-10 shadow-sm border-t-4 border-t-blue-600">
-        <div className="grid grid-cols-3 gap-6 mb-8">
-          <div><label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Título</label><input value={title} className="w-full border-b font-bold p-1 outline-none focus:border-blue-500" onChange={e => setTitle(e.target.value)} /></div>
-          <div><label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">ERP</label><input value={erp} className="w-full border-b font-bold p-1 outline-none focus:border-blue-500" onChange={e => setErp(e.target.value)} /></div>
+        <div className="grid grid-cols-3 gap-6 mb-10">
+          <div><label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Título do Manual</label><input value={title} placeholder="Ex: Guia Técnico" className="w-full border-b font-bold p-1 outline-none focus:border-blue-500" onChange={e => setTitle(e.target.value)} /></div>
+          <div><label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Nome do ERP</label><input value={erp} placeholder="Ex: Totvs" className="w-full border-b font-bold p-1 outline-none focus:border-blue-500" onChange={e => setErp(e.target.value)} /></div>
           <div><label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block text-center">Versão</label><input value={version} className="w-full border-b font-bold p-1 outline-none focus:border-blue-500 text-center" onChange={e => setVersion(e.target.value)} /></div>
         </div>
 
-        <div className="p-6 bg-slate-50 rounded-xl space-y-4">
-          <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b pb-2">Configurar Contatos (Lado a Lado na Seção 3)</div>
-          
-          <div className="grid grid-cols-3 gap-4">
-            <input placeholder="E-mail Suporte ERP" className="p-2 border rounded text-xs bg-white" onChange={e => setErpEmail(e.target.value)} />
-            <input placeholder="Telefone ERP" className="p-2 border rounded text-xs bg-white" onChange={e => setErpPhone(e.target.value)} />
-            <input placeholder="WhatsApp ERP" className="p-2 border rounded text-xs bg-white" onChange={e => setErpWhatsApp(e.target.value)} />
-          </div>
+        <div className="p-6 bg-slate-50 rounded-2xl border border-slate-100">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {/* LADO DO ERP */}
+            <div className="space-y-3">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b pb-2">Dados de Contato: {erp || 'ERP'}</p>
+              <input placeholder="E-mail de Suporte" className="w-full p-2 border rounded text-xs bg-white" onChange={e => setErpEmail(e.target.value)} />
+              <input placeholder="Telefone (opcional)" className="w-full p-2 border rounded text-xs bg-white" onChange={e => setErpPhone(e.target.value)} />
+              <input placeholder="WhatsApp (opcional)" className="w-full p-2 border rounded text-xs bg-white" onChange={e => setErpWhatsApp(e.target.value)} />
+            </div>
 
-          <div className="grid grid-cols-2 gap-4 pt-2">
-            <input value={audacesName} placeholder="Nome Responsável Audaces" className="p-2 border rounded text-xs bg-white font-bold text-blue-600" onChange={e => setAudacesName(e.target.value)} />
-            <input value={audacesEmail} placeholder="E-mail Audaces" className="p-2 border rounded text-xs bg-white font-bold text-blue-600" onChange={e => setAudacesEmail(e.target.value)} />
+            {/* LADO DA AUDACES */}
+            <div className="space-y-3">
+              <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest border-b pb-2">Dados de Contato: Audaces</p>
+              <input value={audacesName} placeholder="Responsável" className="w-full p-2 border rounded text-xs bg-white font-bold" onChange={e => setAudacesName(e.target.value)} />
+              <input value={audacesEmail} placeholder="E-mail Audaces" className="w-full p-2 border rounded text-xs bg-white font-bold" onChange={e => setAudacesEmail(e.target.value)} />
+            </div>
           </div>
         </div>
       </div>
 
       {sections.map((sec) => (
         <div key={sec.id} className="bg-white p-8 rounded-xl border border-slate-200 mb-8 shadow-sm border-l-4 border-l-blue-500">
-          <h3 className="text-xs font-black text-slate-400 uppercase mb-4 tracking-widest">{sec.title}</h3>
-          
+          <h3 className="text-sm font-black text-slate-400 uppercase mb-4 tracking-widest">{sec.title}</h3>
           <textarea value={sec.description} placeholder="Resumo do tópico..." className="w-full p-2 border rounded h-16 mb-6 bg-slate-50 text-xs italic outline-none" onChange={e => updateSection(sec.id, 'description', e.target.value)} />
 
           <div className="space-y-4 mb-6">
             {sec.steps.map((step, idx) => (
               <div key={step.id} className="p-4 border rounded-xl bg-slate-50/50">
-                <textarea value={step.text} placeholder={`Ação do passo ${idx+1}...`} className="w-full bg-transparent border-none focus:ring-0 text-sm mb-2" onChange={e => updateStep(sec.id, step.id, 'text', e.target.value)} />
+                <textarea value={step.text} placeholder={`Passo ${idx+1}...`} className="w-full bg-transparent border-none focus:ring-0 text-sm mb-2" onChange={e => updateStep(sec.id, step.id, 'text', e.target.value)} />
                 <div className="flex items-center gap-4">
                   <input type="file" className="text-[10px]" onChange={e => handleStepImage(sec.id, step.id, e)} />
-                  {step.image && <img src={step.image} className="w-24 h-16 object-cover rounded border" />}
+                  {step.image && <img src={step.image} className="w-24 h-16 object-cover rounded border shadow-md" />}
                 </div>
               </div>
             ))}
@@ -133,7 +138,7 @@ export default function Admin() {
 
           {sec.title.toLowerCase().includes('campos') && (
             <div className="p-4 bg-blue-50/50 border border-blue-100 rounded-xl">
-               <button onClick={() => updateSection(sec.id, 'fields', [...(sec.fields || []), { erpField: '', category: 'Produto', required: false }])} className="text-[10px] font-bold text-blue-600 mb-4 uppercase">+ Add Campo ERP</button>
+               <button onClick={() => updateSection(sec.id, 'fields', [...(sec.fields || []), { erpField: '', category: 'Produto', required: false }])} className="text-[10px] font-bold text-blue-600 mb-4 block uppercase">+ Add Campo ERP</button>
                {sec.fields?.map((f, i) => (
                  <div key={i} className="grid grid-cols-12 gap-2 mb-2 bg-white p-2 rounded shadow-sm items-center">
                     <select className="col-span-4 text-[10px] border rounded" value={f.category} onChange={e => {
