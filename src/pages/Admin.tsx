@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Section, Documentation, IntegratedField, Step } from '../types/doc';
 
 const CATEGORIES = ['Produto', 'Material', 'Operação', 'Serviços', 'Instrução de lavagem', 'Outro'];
@@ -7,9 +7,14 @@ export default function Admin() {
   const [title, setTitle] = useState('');
   const [erp, setErp] = useState('');
   const [version, setVersion] = useState('2025.03');
+  
+  // Contatos
   const [erpEmail, setErpEmail] = useState('');
   const [erpPhone, setErpPhone] = useState('');
   const [erpWhatsApp, setErpWhatsApp] = useState('');
+  const [audacesName, setAudacesName] = useState('Marcela Espindola');
+  const [audacesEmail, setAudacesEmail] = useState('integrations@audaces.com');
+
   const [generatedCode, setGeneratedCode] = useState('');
 
   const createStep = (): Step => ({ id: Math.random().toString(36).substr(2, 9), text: '' });
@@ -30,7 +35,7 @@ export default function Admin() {
   };
 
   const addStep = (sectionId: string) => {
-    setSections(prev => prev.map(s => s.id === sectionId ? { ...s, steps: [...s.steps, createStep()] } : s));
+    setSections(prev => prev.map(s => s.id === sectionId ? { ...s, steps: [...(s.steps || []), createStep()] } : s));
   };
 
   const updateStep = (sectionId: string, stepId: string, field: string, value: any) => {
@@ -49,7 +54,10 @@ export default function Admin() {
   };
 
   const generateManualCode = () => {
-    const newDoc = { id: Math.random().toString(36).substr(2, 9), title, erp, version, erpEmail, erpPhone, erpWhatsApp, sections };
+    const newDoc = { 
+      id: Math.random().toString(36).substr(2, 9), 
+      title, erp, version, erpEmail, erpPhone, erpWhatsApp, audacesName, audacesEmail, sections 
+    };
     setGeneratedCode(JSON.stringify(newDoc, null, 2));
   };
 
@@ -58,34 +66,42 @@ export default function Admin() {
       {generatedCode && (
         <div className="fixed inset-0 bg-slate-900/90 z-[100] p-6 flex flex-col items-center justify-center">
           <div className="w-full max-w-3xl bg-white p-6 rounded-2xl shadow-2xl flex flex-col h-[80vh]">
-            <h2 className="text-lg font-bold mb-2 uppercase tracking-tighter text-blue-600">Código do Manual Gerado</h2>
-            <p className="text-xs text-slate-400 mb-4 italic">Copie tudo e cole no arquivo src/data/manuals.ts</p>
+            <h2 className="text-lg font-bold mb-2 uppercase text-blue-600">Código Gerado</h2>
             <textarea readOnly value={generatedCode} className="flex-1 w-full p-4 font-mono text-[10px] bg-slate-50 border rounded-xl mb-4 outline-none" />
             <button onClick={() => setGeneratedCode('')} className="bg-blue-600 text-white p-3 rounded-full font-bold text-sm">FECHAR</button>
           </div>
         </div>
       )}
 
-      {/* HEADER E CONTATOS ERP */}
+      {/* HEADER E CONTATOS */}
       <div className="bg-white p-8 rounded-xl border mb-10 shadow-sm border-t-4 border-t-blue-600">
         <div className="grid grid-cols-3 gap-6 mb-8">
           <div><label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Título</label><input value={title} className="w-full border-b font-bold p-1 outline-none focus:border-blue-500" onChange={e => setTitle(e.target.value)} /></div>
           <div><label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">ERP</label><input value={erp} className="w-full border-b font-bold p-1 outline-none focus:border-blue-500" onChange={e => setErp(e.target.value)} /></div>
-          <div><label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block">Versão</label><input value={version} className="w-full border-b font-bold p-1 outline-none focus:border-blue-500 text-center" onChange={e => setVersion(e.target.value)} /></div>
+          <div><label className="text-[10px] font-bold text-slate-400 uppercase mb-1 block text-center">Versão</label><input value={version} className="w-full border-b font-bold p-1 outline-none focus:border-blue-500 text-center" onChange={e => setVersion(e.target.value)} /></div>
         </div>
-        <div className="grid grid-cols-3 gap-4 p-5 bg-slate-50 rounded-xl">
-          <div className="col-span-3 text-[10px] font-black text-slate-400 uppercase">Configurar Contatos do ERP (Ficarão lado a lado na Seção 3)</div>
-          <input placeholder="E-mail do ERP" className="p-2 border rounded text-xs bg-white" onChange={e => setErpEmail(e.target.value)} />
-          <input placeholder="Telefone" className="p-2 border rounded text-xs bg-white" onChange={e => setErpPhone(e.target.value)} />
-          <input placeholder="WhatsApp" className="p-2 border rounded text-xs bg-white" onChange={e => setErpWhatsApp(e.target.value)} />
+
+        <div className="p-6 bg-slate-50 rounded-xl space-y-4">
+          <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest border-b pb-2">Configurar Contatos (Lado a Lado na Seção 3)</div>
+          
+          <div className="grid grid-cols-3 gap-4">
+            <input placeholder="E-mail Suporte ERP" className="p-2 border rounded text-xs bg-white" onChange={e => setErpEmail(e.target.value)} />
+            <input placeholder="Telefone ERP" className="p-2 border rounded text-xs bg-white" onChange={e => setErpPhone(e.target.value)} />
+            <input placeholder="WhatsApp ERP" className="p-2 border rounded text-xs bg-white" onChange={e => setErpWhatsApp(e.target.value)} />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 pt-2">
+            <input value={audacesName} placeholder="Nome Responsável Audaces" className="p-2 border rounded text-xs bg-white font-bold text-blue-600" onChange={e => setAudacesName(e.target.value)} />
+            <input value={audacesEmail} placeholder="E-mail Audaces" className="p-2 border rounded text-xs bg-white font-bold text-blue-600" onChange={e => setAudacesEmail(e.target.value)} />
+          </div>
         </div>
       </div>
 
       {sections.map((sec) => (
         <div key={sec.id} className="bg-white p-8 rounded-xl border border-slate-200 mb-8 shadow-sm border-l-4 border-l-blue-500">
-          <h3 className="text-sm font-black text-slate-400 uppercase mb-4 tracking-widest">{sec.title}</h3>
+          <h3 className="text-xs font-black text-slate-400 uppercase mb-4 tracking-widest">{sec.title}</h3>
           
-          <textarea value={sec.description} placeholder="Texto descritivo do tópico (Resumo)..." className="w-full p-2 border rounded h-16 mb-6 bg-slate-50 text-xs italic outline-none" onChange={e => updateSection(sec.id, 'description', e.target.value)} />
+          <textarea value={sec.description} placeholder="Resumo do tópico..." className="w-full p-2 border rounded h-16 mb-6 bg-slate-50 text-xs italic outline-none" onChange={e => updateSection(sec.id, 'description', e.target.value)} />
 
           <div className="space-y-4 mb-6">
             {sec.steps.map((step, idx) => (
@@ -93,14 +109,14 @@ export default function Admin() {
                 <textarea value={step.text} placeholder={`Ação do passo ${idx+1}...`} className="w-full bg-transparent border-none focus:ring-0 text-sm mb-2" onChange={e => updateStep(sec.id, step.id, 'text', e.target.value)} />
                 <div className="flex items-center gap-4">
                   <input type="file" className="text-[10px]" onChange={e => handleStepImage(sec.id, step.id, e)} />
-                  {step.image && <img src={step.image} className="w-32 h-20 object-cover rounded border" />}
+                  {step.image && <img src={step.image} className="w-24 h-16 object-cover rounded border" />}
                 </div>
               </div>
             ))}
           </div>
 
           <div className="flex gap-2 mb-6">
-            <button onClick={() => addStep(sec.id)} className="text-[9px] font-bold bg-slate-800 text-white px-4 py-2 rounded-full uppercase hover:bg-black">+ Adicionar Passo com Print</button>
+            <button onClick={() => addStep(sec.id)} className="text-[9px] font-bold bg-slate-800 text-white px-4 py-2 rounded-full uppercase hover:bg-black">+ Passo com Print</button>
             {!sec.noteContent && (
               <button onClick={() => updateSection(sec.id, 'noteContent', ' ')} className="text-[9px] font-bold border border-slate-300 px-4 py-2 rounded-full uppercase hover:bg-white">+ Adicionar Nota</button>
             )}
@@ -111,13 +127,13 @@ export default function Admin() {
               <select value={sec.noteType} className="bg-transparent border-none font-bold text-[10px]" onChange={e => updateSection(sec.id, 'noteType', e.target.value)}>
                 <option value="info">INFO</option><option value="warning">AVISO</option><option value="success">OK</option>
               </select>
-              <input value={sec.noteContent} placeholder="Digite o conteúdo da nota..." className="flex-1 bg-transparent border-none outline-none text-xs font-semibold" onChange={e => updateSection(sec.id, 'noteContent', e.target.value)} />
+              <input value={sec.noteContent} placeholder="Texto da nota..." className="flex-1 bg-transparent border-none outline-none text-xs font-semibold" onChange={e => updateSection(sec.id, 'noteContent', e.target.value)} />
             </div>
           )}
 
           {sec.title.toLowerCase().includes('campos') && (
             <div className="p-4 bg-blue-50/50 border border-blue-100 rounded-xl">
-               <button onClick={() => updateSection(sec.id, 'fields', [...(sec.fields || []), { erpField: '', category: 'Produto', required: false }])} className="text-[10px] font-bold text-blue-600 mb-4 block uppercase">+ Add Campo ERP</button>
+               <button onClick={() => updateSection(sec.id, 'fields', [...(sec.fields || []), { erpField: '', category: 'Produto', required: false }])} className="text-[10px] font-bold text-blue-600 mb-4 uppercase">+ Add Campo ERP</button>
                {sec.fields?.map((f, i) => (
                  <div key={i} className="grid grid-cols-12 gap-2 mb-2 bg-white p-2 rounded shadow-sm items-center">
                     <select className="col-span-4 text-[10px] border rounded" value={f.category} onChange={e => {
@@ -125,7 +141,7 @@ export default function Admin() {
                     }}>
                       {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
-                    <input value={f.erpField} placeholder="Nome do Campo" className="col-span-6 text-[10px] border rounded p-1" onChange={e => {
+                    <input value={f.erpField} placeholder="Campo" className="col-span-6 p-1 border rounded text-[10px]" onChange={e => {
                       const flds = [...sec.fields!]; flds[i].erpField = e.target.value; updateSection(sec.id, 'fields', flds);
                     }} />
                     <input type="checkbox" checked={f.required} className="col-span-2 justify-self-center" onChange={e => {
@@ -138,9 +154,7 @@ export default function Admin() {
         </div>
       ))}
 
-      <button onClick={generateManualCode} className="fixed bottom-10 right-10 bg-blue-600 text-white px-16 py-6 rounded-full font-black shadow-2xl hover:scale-110 transition-all uppercase tracking-widest text-sm z-50 border-4 border-white">
-        🚀 Gerar Código Final
-      </button>
+      <button onClick={generateManualCode} className="fixed bottom-10 right-10 bg-blue-600 text-white px-16 py-6 rounded-full font-black shadow-2xl hover:scale-110 transition-all uppercase tracking-widest text-sm z-50 border-4 border-white">🚀 Gerar Código Final</button>
     </div>
   );
 }
