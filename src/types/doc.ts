@@ -20,7 +20,6 @@ export interface Section {
   noteContent?: string;
 }
 
-// Adicionamos os contatos aqui
 export interface Documentation {
   id: string;
   title: string;
