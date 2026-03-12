@@ -1,10 +1,17 @@
 export interface IntegratedField {
   erpField: string;
   ideaField: string;
-  category: string; // Ex: Modelos, Materiais, Insumos
+  category: string; 
   type: 'Texto' | 'Número' | 'Data' | 'Lista';
-  required: boolean; // Sim ou Não
+  required: boolean;
   description: string;
+}
+
+export interface SubSection {
+  id: string;
+  title: string;
+  content: string;
+  images: string[];
 }
 
 export interface Section {
@@ -13,6 +20,7 @@ export interface Section {
   content: string;
   images: string[];
   fields?: IntegratedField[];
+  subSections?: SubSection[]; // Novo campo para sub-tópicos
   noteType?: 'info' | 'warning' | 'success';
   noteContent?: string;
 }
