@@ -4,11 +4,16 @@ export interface IntegratedField {
   required: boolean;
 }
 
+export interface Step {
+  id: string;
+  text: string;
+  image?: string;
+}
+
 export interface SubSection {
   id: string;
   title: string;
-  content: string;
-  images: string[];
+  steps: Step[];
   noteType?: 'info' | 'warning' | 'success';
   noteContent?: string;
 }
@@ -16,8 +21,8 @@ export interface SubSection {
 export interface Section {
   id: string;
   title: string;
-  content: string;
-  images: string[];
+  description: string;
+  steps: Step[];
   fields?: IntegratedField[];
   subSections?: SubSection[];
   noteType?: 'info' | 'warning' | 'success';
