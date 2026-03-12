@@ -33,6 +33,10 @@ jobs:
       - name: Build
         run: npm run build
 
+      # ESTE É O TRUQUE: Cria uma cópia do index.html como 404.html
+      - name: Create 404 Page
+        run: cp dist/index.html dist/404.html
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
