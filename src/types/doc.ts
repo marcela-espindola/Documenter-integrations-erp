@@ -28,5 +28,7 @@ export interface Documentation {
   erpEmail?: string;
   erpPhone?: string;
   erpWhatsApp?: string;
+  audacesName?: string; // NOVO
+  audacesEmail?: string; // NOVO
   sections: Section[];
 }
