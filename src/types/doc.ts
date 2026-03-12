@@ -2,7 +2,7 @@ export interface Section {
   id: string;
   title: string;
   content: string;
-  image?: string; // Aqui ficará a imagem em Base64
+  images: string[]; // Agora é um array para aceitar vários prints
 }
 
 export interface Documentation {
