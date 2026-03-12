@@ -10,21 +10,12 @@ export interface Step {
   image?: string;
 }
 
-export interface SubSection {
-  id: string;
-  title: string;
-  steps: Step[];
-  noteType?: 'info' | 'warning' | 'success';
-  noteContent?: string;
-}
-
 export interface Section {
   id: string;
   title: string;
   description: string;
   steps: Step[];
   fields?: IntegratedField[];
-  subSections?: SubSection[];
   noteType?: 'info' | 'warning' | 'success';
   noteContent?: string;
 }
